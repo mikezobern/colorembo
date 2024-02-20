@@ -138,6 +138,7 @@ class Button():
             textpos.centery = button_dict['rect'].centery
             main_screen_surface.blit(text, textpos)
 
+
     def get_activated(self):
         '''Returns the full activated button. If several buttons are activated,
         method returns the first activated button in list'''
