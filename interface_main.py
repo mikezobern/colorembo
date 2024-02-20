@@ -41,9 +41,12 @@ class Dot():
     def to_surface(self, surface: pygame.surface.Surface):
         '''Method to draw all dots and edges on the screen'''
         for edge in self.G.edges:
-            # print(' ----------> TEST EDGE: ', edge)
+            print(' ----------> EDGE: ', edge)
+            print('self.G.nodes[edge[0]]: ', self.G.nodes[edge[0]])
             start_dot = self.G.nodes[edge[0]]['position']
+            print(' ----------> start_dot: ', start_dot)
             end_dot = self.G.nodes[edge[1]]['position']
+            print(' ----------> end_dot: ', end_dot)
             pygame.draw.aaline(main_screen_surface,'white',start_dot, end_dot)
         for name_string in self.G.nodes:
             if self.G.nodes[name_string]['dragged']:
@@ -110,6 +113,7 @@ class Button():
                 button_name = button_dict['name']
                 return button_name
         return None
+
     def activate_desactivate_by_name(self, button_name):
         '''Activate and desactivate focus at the given
         button by the button_name'''
@@ -159,8 +163,10 @@ while 1:
         if event.type == pygame.MOUSEBUTTONDOWN:
             dot_name = dot.dot_name_by_xy(event.pos)
 
-            if dot_name and not button.get_activated():
-                focused_name = dot.focus_defocus(dot_name)
+
+            # It node is clicked, but there are no button activated, so I change do state... What a fuck! It is gibberish!
+            if dot_name and button.get_activated() == None:
+                dot.focus_defocus(dot_name)
 
             button_name = button.button_name_by_xy(event.pos)
             if button_name:
@@ -176,22 +182,24 @@ while 1:
                 name = str(random.randint(1000000,20000000))
                 dot.add(name, (500,500))
 
-            if awaiting_state == 'APP IS AWAITING DOT_NAME_2' and dot_name:
+            if awaiting_state == 'APP IS AWAITING DOT_NAME_2' and dot_name and dot_to_link_1:
                 print(3)
+                dot.link(dot_to_link_1, dot_name)
                 awaiting_state = None
-                dot_to_link_2 = dot_name
-                dot.link(dot_to_link_1, dot_to_link_2)
                 dot_to_link_1 = None
                 dot_to_link_2 = None
 
-            if awaiting_state=='APP IS AWAITING DOT_NAME_1' and dot_name:
+            if awaiting_state=='APP IS AWAITING DOT_NAME_1' and dot_name and dot_to_link_2==None:
                 awaiting_state = 'APP IS AWAITING DOT_NAME_2'
                 dot_to_link_1 = dot_name
+                dot_to_link_2 = None
                 print(2)
 
             if activated_button == 'the_add_edge_button' and awaiting_state == None:
                 print('waiting for click to a node...')
                 awaiting_state = 'APP IS AWAITING DOT_NAME_1'
+                dot_to_link_1 = None
+                dot_to_link_2 = None
 
 
 
