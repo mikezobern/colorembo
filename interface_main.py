@@ -41,12 +41,8 @@ class Dot():
     def to_surface(self, surface: pygame.surface.Surface):
         '''Method to draw all dots and edges on the screen'''
         for edge in self.G.edges:
-            print(' ----------> EDGE: ', edge)
-            print('self.G.nodes[edge[0]]: ', self.G.nodes[edge[0]])
             start_dot = self.G.nodes[edge[0]]['position']
-            print(' ----------> start_dot: ', start_dot)
             end_dot = self.G.nodes[edge[1]]['position']
-            print(' ----------> end_dot: ', end_dot)
             pygame.draw.aaline(main_screen_surface,'white',start_dot, end_dot)
         for name_string in self.G.nodes:
             if self.G.nodes[name_string]['dragged']:
@@ -138,7 +134,6 @@ class Button():
             textpos.centery = button_dict['rect'].centery
             main_screen_surface.blit(text, textpos)
 
-
     def get_activated(self):
         '''Returns the full activated button. If several buttons are activated,
         method returns the first activated button in list'''
@@ -148,79 +143,59 @@ class Button():
         return None
 button = Button()
 
+
 main_screen_surface = pygame.display.set_mode((1000,1000))
 
-awaiting_state = None # 'APP IS AWAITING DOT_NAME_1', 'APP IS AWAITING DOT_NAME_2'
-dot_to_link_1 = None
-dot_to_link_2 = None
+app_state = None
+
 
 while 1:
     main_screen_surface.fill('black')
     for event in pygame.event.get():
-
+        internal_actions = 0
         if event.type == pygame.QUIT:
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            dot_name = dot.dot_name_by_xy(event.pos)
+            # АКТИВИРОВАТЬ КНОПКУ "ДОБАВИТЬ НОДУ":
+            # Если никакие кнопки не активированы
+            # И если клик пришелся на кнопку "добавить"
+            # То активировать кнопку и перевести программу в состояние "ЖДУ КЛИКА ДЛЯ ДОБАВЛЕНИЯ ТОЧКИ
+            if button.get_activated()==None and button.button_name_by_xy(event.pos)=='the_add_node_button':
+                button.activate_desactivate_by_name('the_add_node_button')
+                app_state = 'AWAITING DOT ADDING'
+                internal_actions += 1
+
+            # ДЕЗАКТИВИРОВАТЬ КНОПКУ "ДОБАВИТЬ НОДУ"
+            if button.get_activated()=='the_add_node_button' and button.button_name_by_xy(event.pos)=='the_add_node_button' \
+                    and app_state == 'AWAITING DOT ADDING' and internal_actions == 0:
+                button.activate_desactivate_by_name('the_add_node_button')
+                internal_actions += 1
+                app_state = None
 
 
-            # It node is clicked, but there are no button activated, so I change do state... What a fuck! It is gibberish!
-            if dot_name and button.get_activated() == None:
-                dot.focus_defocus(dot_name)
-
-            button_name = button.button_name_by_xy(event.pos)
-            if button_name:
-                activation_result = button.activate_desactivate_by_name(button_name)
-
-            dot_to_action = dot.dot_name_by_xy(event.pos) # mouse has clicked to the node
-            activated_button = button.get_activated()
-            if activated_button and dot_to_action:
-                if activated_button == 'the_delete_node_button':
-                    dot.delete(dot_to_action)
-            if activated_button == 'the_add_node_button':
-                import random
-                name = str(random.randint(1000000,20000000))
-                dot.add(name, (500,500))
-
-            if awaiting_state == 'APP IS AWAITING DOT_NAME_2' and dot_name and dot_to_link_1:
-                print(3)
-                dot.link(dot_to_link_1, dot_name)
-                awaiting_state = None
-                dot_to_link_1 = None
-                dot_to_link_2 = None
-
-            if awaiting_state=='APP IS AWAITING DOT_NAME_1' and dot_name and dot_to_link_2==None:
-                awaiting_state = 'APP IS AWAITING DOT_NAME_2'
-                dot_to_link_1 = dot_name
-                dot_to_link_2 = None
-                print(2)
-
-            if activated_button == 'the_add_edge_button' and awaiting_state == None:
-                print('waiting for click to a node...')
-                awaiting_state = 'APP IS AWAITING DOT_NAME_1'
-                dot_to_link_1 = None
-                dot_to_link_2 = None
+            # ДОБАВИТЬ НОВУЮ НОДУ
+            # если уже активирована кнопка "добавить",
+            # после активации кнопки "добавить" юзер никуда не кликал и если сейчас мышка опустилась на поле,
+            # то нужно в эту точку добавить новую ноду
+            if button.get_activated()=='the_add_node_button' and app_state == 'AWAITING DOT ADDING' and internal_actions == 0:
+                import time
+                dot.add(str(time.time()),event.pos)
+                internal_actions += 1
+                button.activate_desactivate_by_name('the_add_node_button')
+                app_state == None
 
 
 
 
-
-
-
-        if event.type == pygame.MOUSEBUTTONUP:
-            if focused_name:
-                dot.move(focused_name,event.pos)
-                dot.focus_defocus(focused_name)
 
         if event.type == pygame.MOUSEMOTION:
-            focused_name = dot.get_focused()
-            if focused_name:
-                dot.move(focused_name,event.pos)
+            pass
 
+        if event.type == pygame.MOUSEBUTTONUP:
+            pass
 
 
     button.to_surface(main_screen_surface)
-
     dot.to_surface(main_screen_surface)
     pygame.display.flip()
