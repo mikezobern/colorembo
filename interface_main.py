@@ -187,6 +187,7 @@ main_screen_surface = pygame.display.set_mode((1000,1000))
 
 app_state = None
 first_dot_to_edge_delete = None
+node_dragging = None
 
 while 1:
     main_screen_surface.fill('black')
@@ -355,16 +356,14 @@ while 1:
                 dot.unlink(first_dot_to_edge_delete, dot.dot_name_by_xy(pos))
                 first_dot_to_edge_delete = None
 
-            # Обрботать клик перетаскивания ноды
-            if internal_actions == 0 \
-                    and app_state == None \
-                    and dot.dot_name_by_xy(pos) \
-                    and button.get_activated() == None:
-                dot.
-                dot.highlight(dot.dot_name_by_xy(pos))
 
         if event.type == pygame.MOUSEMOTION:
-            pass
+            if dot.dot_name_by_xy(event.pos) \
+                    and event.buttons[0] \
+                    and app_state == None:
+                print('pos', event.pos)
+                print('but', event.buttons)
+                dot.move(dot.dot_name_by_xy(event.pos), event.pos)
 
         if event.type == pygame.MOUSEBUTTONUP:
             pass

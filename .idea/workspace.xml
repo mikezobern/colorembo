@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!">
+    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="almost everything is working except node-dragging and to-node-information-adding">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interface_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface_main.py" afterDir="false" />
     </list>
@@ -253,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708467353177</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="almost everything is working except node-dragging and to-node-information-adding">
+      <option name="closed" value="$allow_reset$" />
+      <created>1708494020422</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1708494020422</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -272,6 +280,7 @@
     <MESSAGE value="almost working interface, just one small bug here..." />
     <MESSAGE value="test save" />
     <MESSAGE value="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!" />
-    <option name="LAST_COMMIT_MESSAGE" value="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!" />
+    <MESSAGE value="almost everything is working except node-dragging and to-node-information-adding" />
+    <option name="LAST_COMMIT_MESSAGE" value="almost everything is working except node-dragging and to-node-information-adding" />
   </component>
 </project>
