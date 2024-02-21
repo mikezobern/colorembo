@@ -7,9 +7,12 @@ class Dot():
         self.R = 20
         # self.links = 1
         self.G = nx.Graph() # create graph object
-        self.G.add_node('test_dot_1', position = (120, 120), dragged = False, fixed = True)
-        self.G.add_node('test_dot_2', position = (220, 230), dragged = False, fixed = True)
-        self.G.add_node('test_dot_3', position=(500, 330), dragged=False, fixed=True)
+
+        self.G.add_node('test_dot_1', position = (120, 120), dragged = False, fixed = True, highlight = False)
+        self.G.add_node('test_dot_2', position = (220, 230), dragged = False, fixed = True, highlight = False)
+        self.G.add_node('test_dot_3', position=(500, 330), dragged=False, fixed=True, highlight = False)
+
+
         self.G.add_edge('test_dot_1','test_dot_2')
         self.G.add_edge('test_dot_2', 'test_dot_3')
         self.G.add_edge('test_dot_1', 'test_dot_3')
@@ -24,7 +27,7 @@ class Dot():
         if self.G.nodes[name_string]['dragged']:
             return name_string
     def add(self, name_string: str, xy: tuple) -> None:
-        self.G.add_node(name_string, position = xy, dragged = False, fixed = True)
+        self.G.add_node(name_string, position = xy, dragged = False, fixed = True, highlight=False)
     def delete(self, name_string: str) -> None:
         '''
         delete node
@@ -49,15 +52,35 @@ class Dot():
                 pygame.draw.circle(surface, (225, 0, 0), self.G.nodes[name_string]['position'], self.R * 1.1)
             pygame.draw.circle(surface, (150, 150, 150), self.G.nodes[name_string]['position'], self.R)
 
+            if self.G.nodes[name_string]['highlight']:
+                pygame.draw.circle(surface, (0, 255, 0), self.G.nodes[name_string]['position'], self.R * 1.1)
+            pygame.draw.circle(surface, (150, 150, 150), self.G.nodes[name_string]['position'], self.R)
+
             font = pygame.font.Font(None, self.R)
             text = font.render(name_string, 2, (0, 255, 150))
             textpos = text.get_rect()
             textpos.centery = self.G.nodes[name_string]['position'][1]
             textpos.centerx = self.G.nodes[name_string]['position'][0]
             surface.blit(text, textpos)
+
+    def highlight(self, dot_name):
+        self.G.nodes[dot_name]['highlight'] = True
+        print(dot_name, self.G.nodes[dot_name]['highlight'], ' is highlited')
+
+    def no_highlight(self, dot_name):
+        self.G.nodes[dot_name]['highlight'] = False
+        print(dot_name, self.G.nodes[dot_name]['highlight'], ' is not highlited')
+
     def link(self,name_1,name_2):
         '''Method to link one dot to another'''
         self.G.add_edge(name_1,name_2)
+
+    def unlink(self, name_1,name_2):
+        '''Unlink two dots it they are linked'''
+        try:
+            self.G.remove_edge(name_1,name_2)
+        except:
+            pass
 
 dot = Dot()
 
@@ -98,6 +121,8 @@ class Button():
                         the_add_edge_button,
                         the_delete_edge_button]
 
+
+
     def button_name_by_xy(self,xy):
         '''Returns name of the button, if cursor coordinates xy
         is laying inside the button's rectangle'''
@@ -117,6 +142,21 @@ class Button():
             if button['name'] == button_name:
                 button['activated'] = not button['activated']
 
+    def activate_by_name(self, button_name):
+        '''Activate focus at the given
+        button by the button_name'''
+        for button in self.buttons:
+            if button['name'] == button_name:
+                button['activated'] = True
+
+    def desactivate_by_name(self, button_name):
+        '''DesActivate focus at the given
+        button by the button_name'''
+        for button in self.buttons:
+            if button['name'] == button_name:
+                button['activated'] = False
+
+
     def to_surface(self, surface):
         '''Method for visualising all buttons on the screen'''
         for button_dict in self.buttons:
@@ -135,8 +175,7 @@ class Button():
             main_screen_surface.blit(text, textpos)
 
     def get_activated(self):
-        '''Returns the full activated button. If several buttons are activated,
-        method returns the first activated button in list'''
+        '''Returns the name of the first activated button in list'''
         for button_dict in self.buttons:
             if button_dict['activated']:
                 return button_dict['name']
@@ -147,30 +186,38 @@ button = Button()
 main_screen_surface = pygame.display.set_mode((1000,1000))
 
 app_state = None
-
+first_dot_to_edge_delete = None
 
 while 1:
     main_screen_surface.fill('black')
     for event in pygame.event.get():
+
         internal_actions = 0
+
         if event.type == pygame.QUIT:
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
+            pos = event.pos
+
             # АКТИВИРОВАТЬ КНОПКУ "ДОБАВИТЬ НОДУ":
             # Если никакие кнопки не активированы
             # И если клик пришелся на кнопку "добавить"
             # То активировать кнопку и перевести программу в состояние "ЖДУ КЛИКА ДЛЯ ДОБАВЛЕНИЯ ТОЧКИ
-            if button.get_activated()==None and button.button_name_by_xy(event.pos)=='the_add_node_button':
-                button.activate_desactivate_by_name('the_add_node_button')
+            if button.get_activated()==None \
+                    and button.button_name_by_xy(pos)=='the_add_node_button':
+                print('АКТИВИРОВАТЬ КНОПКУ "ДОБАВИТЬ НОДУ"')
+                button.activate_by_name('the_add_node_button')
                 app_state = 'AWAITING DOT ADDING'
                 internal_actions += 1
 
             # ДЕЗАКТИВИРОВАТЬ КНОПКУ "ДОБАВИТЬ НОДУ"
-            if button.get_activated()=='the_add_node_button' and button.button_name_by_xy(event.pos)=='the_add_node_button' \
-                    and app_state == 'AWAITING DOT ADDING' and internal_actions == 0:
-                button.activate_desactivate_by_name('the_add_node_button')
-                internal_actions += 1
+            if button.button_name_by_xy(pos)=='the_add_node_button' \
+                    and app_state == 'AWAITING DOT ADDING' \
+                    and internal_actions == 0:
+                print('ДЕЗАКТИВИРОВАТЬ КНОПКУ @ДОБАВИТЬ НОДУ@')
+                button.desactivate_by_name('the_add_node_button')
+                internal_actions = 1
                 app_state = None
 
 
@@ -178,16 +225,143 @@ while 1:
             # если уже активирована кнопка "добавить",
             # после активации кнопки "добавить" юзер никуда не кликал и если сейчас мышка опустилась на поле,
             # то нужно в эту точку добавить новую ноду
-            if button.get_activated()=='the_add_node_button' and app_state == 'AWAITING DOT ADDING' and internal_actions == 0:
-                import time
-                dot.add(str(time.time()),event.pos)
+            if button.get_activated()=='the_add_node_button' \
+                    and app_state == 'AWAITING DOT ADDING' \
+                    and internal_actions == 0:
+                print('ДОБАВИТЬ НОВУЮ НОДУ')
+                dot.add('svsvsvsvsvsv',pos)
+                internal_actions = 1
+                button.desactivate_by_name('the_add_node_button')
+                app_state = None
+
+            # Активировать кнопку "удалить ноду"
+            but_name = button.button_name_by_xy(pos)
+            if but_name=='the_delete_node_button' \
+                    and app_state == None \
+                    and internal_actions == 0:
+                print('Активировать кнопку "удалить ноду"')
+                button.activate_by_name(but_name)
                 internal_actions += 1
-                button.activate_desactivate_by_name('the_add_node_button')
-                app_state == None
+                app_state = 'AWAITING DOT DELETING'
 
+            # Обработать клик удаления удаление ноды
+            dot_name = dot.dot_name_by_xy(event.pos)
+            if dot_name \
+                    and internal_actions == 0 \
+                    and app_state == 'AWAITING DOT DELETING':
+                print('Обработать клик удаления удаление ноды')
+                dot.delete(dot_name)
+                internal_actions += 1
+                button.desactivate_by_name('the_delete_node_button')
+                app_state = None
 
+            # дезактивировать кнопку "удалить ноду"
+            if internal_actions == 0 \
+                    and app_state == 'AWAITING DOT DELETING' \
+                    and button.button_name_by_xy(pos) =='the_delete_node_button':
+                print('Дезактивая кнопки удаления ноды')
+                app_state = None
+                internal_actions += 1
+                button.desactivate_by_name('the_delete_node_button')
 
+            # Активировать кнопку "добавить ребро"
+            if internal_actions == 0 \
+                    and app_state == None \
+                    and button.button_name_by_xy(pos) == 'the_add_edge_button' \
+                    and button.get_activated()!='the_add_edge_button':
+                print('Активирована кнопка ДОБАВИТЬ РЕБРО')
+                internal_actions = 1
+                button.activate_by_name('the_add_edge_button')
+                app_state = 'AWAITING EDGE ADDING NODE 1'
 
+            # Дезактивировать кнопку "добавить ребро"
+            if internal_actions == 0 \
+                    and (app_state == 'AWAITING EDGE ADDING NODE 1' or app_state == 'AWAITING EDGE ADDING NODE 2')\
+                    and button.get_activated()=='the_add_edge_button' \
+                    and button.button_name_by_xy(pos)=='the_add_edge_button':
+                button.desactivate_by_name('the_add_edge_button')
+                internal_actions = 1
+                app_state = None
+
+            # Обработать первый клик после активации кнопки "добавить ребро"
+            if internal_actions == 0 \
+                    and (app_state == 'AWAITING EDGE ADDING NODE 1')\
+                    and button.get_activated()=='the_add_edge_button' \
+                    and dot.dot_name_by_xy(pos):
+                print('Обработать первый клик после активации кнопки "добавить ребро"')
+                internal_actions = 1
+                app_state = 'AWAITING EDGE ADDING NODE 2'
+                linking_node_1 = dot.dot_name_by_xy(pos)
+                dot.highlight(linking_node_1)
+
+            # Обработать второй клик после активации кнопки "добавить ребро"
+            if internal_actions == 0 \
+                    and (app_state == 'AWAITING EDGE ADDING NODE 2')\
+                    and button.get_activated()=='the_add_edge_button' \
+                    and dot.dot_name_by_xy(pos)\
+                    and linking_node_1 != dot.dot_name_by_xy(pos):
+                print('Обработать второй клик после активации кнопки "добавить ребро"')
+                internal_actions = 1
+                app_state = None
+                dot.link(linking_node_1,dot.dot_name_by_xy(pos))
+                button.desactivate_by_name('the_add_edge_button')
+                dot.no_highlight(linking_node_1)
+
+            # Активировать кнопку "удалить ребро"
+            if internal_actions == 0 \
+                    and app_state == None \
+                    and button.get_activated()==None \
+                    and button.button_name_by_xy(pos) == 'the_delete_edge_button':
+                print('Активировать кнопку "удалить ребро"')
+                button.activate_by_name('the_delete_edge_button')
+                internal_actions = 1
+                app_state = 'AWAITING FIRST NODE TO EDGE DELETION'
+
+            # Дезактивировать кнопку "удалить ребро"
+            if internal_actions == 0 \
+                    and app_state == 'AWAITING FIRST NODE TO EDGE DELETION' \
+                    and button.get_activated()== 'the_delete_edge_button' \
+                    and button.button_name_by_xy(pos) == 'the_delete_edge_button':
+                print('Дезактивировать кнопку "удалить ребро"')
+                button.desactivate_by_name('the_delete_edge_button')
+                internal_actions = 1
+                app_state = None
+
+            # Обработать 1 клик после активации кнопки "удалить ребро"
+
+            if internal_actions == 0 \
+                    and app_state == 'AWAITING FIRST NODE TO EDGE DELETION' \
+                    and button.get_activated() == 'the_delete_edge_button' \
+                    and dot.dot_name_by_xy(pos) \
+                    and first_dot_to_edge_delete == None:
+                print('Обработать 1 клик после активации кнопки "удалить ребро"')
+                internal_actions = 1
+
+                dot.highlight(dot.dot_name_by_xy(pos))
+                first_dot_to_edge_delete = dot.dot_name_by_xy(pos)
+                app_state = 'AWAITING SECOND NODE TO EDGE DELETION'
+
+            # Обработать 2 клик после активации кнопки "удалить ребро"
+            if internal_actions == 0 \
+                    and app_state == 'AWAITING SECOND NODE TO EDGE DELETION' \
+                    and button.get_activated() == 'the_delete_edge_button' \
+                    and dot.dot_name_by_xy(pos) \
+                    and first_dot_to_edge_delete != None:
+                print('Обработать 2 клик после активации кнопки "удалить ребро"')
+                internal_actions = 1
+                app_state = None
+                dot.no_highlight(first_dot_to_edge_delete)
+                button.desactivate_by_name('the_delete_edge_button')
+                dot.unlink(first_dot_to_edge_delete, dot.dot_name_by_xy(pos))
+                first_dot_to_edge_delete = None
+
+            # Обрботать клик перетаскивания ноды
+            if internal_actions == 0 \
+                    and app_state == None \
+                    and dot.dot_name_by_xy(pos) \
+                    and button.get_activated() == None:
+                dot.
+                dot.highlight(dot.dot_name_by_xy(pos))
 
         if event.type == pygame.MOUSEMOTION:
             pass

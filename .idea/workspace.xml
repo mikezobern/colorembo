@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="almost working interface, just one small bug here...">
+    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interface_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface_main.py" afterDir="false" />
     </list>
@@ -237,7 +237,23 @@
       <option name="project" value="LOCAL" />
       <updated>1708460881596</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="test save">
+      <option name="closed" value="$allow_reset$" />
+      <created>1708462077563</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1708462077563</updated>
+    </task>
+    <task id="LOCAL-00005" summary="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!">
+      <option name="closed" value="$allow_reset$" />
+      <created>1708467353177</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708467353177</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -254,6 +270,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="one random line and symmetric dict" />
     <MESSAGE value="almost working interface, just one small bug here..." />
-    <option name="LAST_COMMIT_MESSAGE" value="almost working interface, just one small bug here..." />
+    <MESSAGE value="test save" />
+    <MESSAGE value="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!" />
+    <option name="LAST_COMMIT_MESSAGE" value="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!" />
   </component>
 </project>
