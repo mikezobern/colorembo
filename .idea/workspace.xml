@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="almost everything is working except node-dragging and to-node-information-adding">
+    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="interface is almost complete excluding information adding to node!">
+      <change afterPath="$PROJECT_DIR$/get_embedding.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graph_store.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mrsc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/text_buffer_interface.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xy_mapping.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emb_func_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/emb_func_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interface_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networkx_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/openai_emb.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="$allow_reset$" />
@@ -38,23 +47,53 @@
     <option name="hideEmptyMiddlePackages" value="$allow_reset$" />
     <option name="showLibraryContents" value="$allow_reset$" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.emb_func_test.executor": "Run",
-    "Python.interface_main.executor": "Run",
-    "Python.lambda_test.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.networkx_test.executor": "Run",
-    "Python.openai_emb.executor": "Run",
-    "Python.symmetric_dict.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "custom__events",
-    "last_opened_file_path": "C:/Users/axnm/PycharmProjects/educational_projects/experiments/embeddings/embeddings",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.emb_func_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.get_embedding.executor&quot;: &quot;Run&quot;,
+    &quot;Python.graph_store.executor&quot;: &quot;Run&quot;,
+    &quot;Python.interface_main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.lambda_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mrsc.executor&quot;: &quot;Run&quot;,
+    &quot;Python.networkx_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.openai_emb.executor&quot;: &quot;Run&quot;,
+    &quot;Python.softmax.executor&quot;: &quot;Run&quot;,
+    &quot;Python.subprocess_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.symmetric_dict.executor&quot;: &quot;Run&quot;,
+    &quot;Python.text_buffer_interface.executor&quot;: &quot;Run&quot;,
+    &quot;Python.trainer.executor&quot;: &quot;Run&quot;,
+    &quot;Python.xy_mapping.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;custom__events&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/axnm/PycharmProjects/educational_projects/experiments/embeddings/embeddings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.interface_main">
+    <configuration name="get_embedding" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
+      <module name="colors_emb" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="$allow_reset$" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="$allow_reset$" />
+      <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
+      <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/get_embedding.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="interface_main" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
       <module name="colors_emb" />
       <option name="ENV_FILES" value="" />
@@ -69,28 +108,6 @@
       <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
       <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/interface_main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="lambda_test" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
-      <module name="colors_emb" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="$allow_reset$" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="$allow_reset$" />
-      <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
-      <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lambda_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -121,7 +138,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="networkx_test" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
+    <configuration name="mrsc" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
       <module name="colors_emb" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -134,7 +151,7 @@
       <option name="IS_MODULE_SDK" value="$allow_reset$" />
       <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
       <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/networkx_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mrsc.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -143,7 +160,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="openai_emb" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
+    <configuration name="trainer" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
       <module name="colors_emb" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -156,7 +173,7 @@
       <option name="IS_MODULE_SDK" value="$allow_reset$" />
       <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
       <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/openai_emb.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/trainer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -165,7 +182,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="symmetric_dict" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
+    <configuration name="xy_mapping" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
       <module name="colors_emb" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -178,7 +195,7 @@
       <option name="IS_MODULE_SDK" value="$allow_reset$" />
       <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
       <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/symmetric_dict.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/xy_mapping.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -190,10 +207,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.interface_main" />
-        <item itemvalue="Python.networkx_test" />
-        <item itemvalue="Python.lambda_test" />
-        <item itemvalue="Python.symmetric_dict" />
-        <item itemvalue="Python.openai_emb" />
+        <item itemvalue="Python.xy_mapping" />
+        <item itemvalue="Python.trainer" />
+        <item itemvalue="Python.mrsc" />
+        <item itemvalue="Python.get_embedding" />
       </list>
     </recent_temporary>
   </component>
@@ -261,7 +278,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708494020422</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="interface is almost complete excluding information adding to node!">
+      <option name="closed" value="$allow_reset$" />
+      <created>1708496316325</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1708496316325</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -281,6 +306,7 @@
     <MESSAGE value="test save" />
     <MESSAGE value="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!" />
     <MESSAGE value="almost everything is working except node-dragging and to-node-information-adding" />
-    <option name="LAST_COMMIT_MESSAGE" value="almost everything is working except node-dragging and to-node-information-adding" />
+    <MESSAGE value="interface is almost complete excluding information adding to node!" />
+    <option name="LAST_COMMIT_MESSAGE" value="interface is almost complete excluding information adding to node!" />
   </component>
 </project>

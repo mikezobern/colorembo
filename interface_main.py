@@ -1,21 +1,16 @@
 import sys
 import pygame; pygame.init()
 import networkx as nx
+from text_buffer_interface import text_buffer_interface
+from graph_store import Store
+from trainer import Trainer
+
 class Dot():
     '''Constructor for all operations with dots: from storing to displaing'''
     def __init__(self):
         self.R = 20
-        # self.links = 1
-        self.G = nx.Graph() # create graph object
-
-        self.G.add_node('test_dot_1', position = (120, 120), dragged = False, fixed = True, highlight = False)
-        self.G.add_node('test_dot_2', position = (220, 230), dragged = False, fixed = True, highlight = False)
-        self.G.add_node('test_dot_3', position=(500, 330), dragged=False, fixed=True, highlight = False)
-
-
-        self.G.add_edge('test_dot_1','test_dot_2')
-        self.G.add_edge('test_dot_2', 'test_dot_3')
-        self.G.add_edge('test_dot_1', 'test_dot_3')
+        self.store = Store()
+        self.G = self.store.get()
     def move(self, name_string, destination:tuple):
         self.G.nodes[name_string]['position'] = destination
     def get_focused(self):
@@ -26,22 +21,56 @@ class Dot():
         self.G.nodes[name_string]['dragged'] = not self.G.nodes[name_string]['dragged']
         if self.G.nodes[name_string]['dragged']:
             return name_string
-    def add(self, name_string: str, xy: tuple) -> None:
-        self.G.add_node(name_string, position = xy, dragged = False, fixed = True, highlight=False)
+    def add(self, xy: tuple, text: str,color = (20,120,220)) -> None:
+        # Coordinate, text, color
+        node_list = self.G.nodes
+        # new name as integer, that is packed into a string, because
+        # I do not sure my app be stable if it will be a naked integer the as a node name:
+        if node_list:
+            new_name = str( max([int(integer) for integer in node_list]) + 1 )
+        else:
+            new_name = '0'
+        print('new_name', new_name)
+
+        # получение эмбеддинга
+        from get_embedding import get_emb
+
+
+        self.G.add_node(new_name,
+                        position = xy,
+                        dragged = False,
+                        fixed = True,
+                        highlight=False,
+                        text = text,
+                        color = color,
+                        embedding = get_emb(text)
+                        )
+
+        self.store.dump(self.G)
+        print('НОВАЯ НОДА ', self.G.nodes[new_name])
+
+
+
+
     def delete(self, name_string: str) -> None:
         '''
         delete node
         '''
         self.G.remove_node(name_string)
+        self.store.dump(self.G)
     def dot_name_by_xy(self, cursor_coordinates: tuple) -> None|str:
         '''Method returns the name of the dot that is overlapping with cursor;
         If there are several dots, method chooses one o them randomly.'''
         for name_string in self.G.nodes:
             pos = self.G.nodes[name_string]['position']
+            # print('name_string: ', name_string,'pos: ', pos)
+            # print('cursor_coordinates: ', cursor_coordinates, 'coorid type:', type(cursor_coordinates))
+
+
             if ((cursor_coordinates[0] - pos[0])**2 + (cursor_coordinates[1] - pos[1])**2 <= self.R**2): # within 10 pixels on the screen
                 return name_string
         return None
-    def to_surface(self, surface: pygame.surface.Surface):
+    def to_surface(self, surface: pygame.surface.Surface, GG = None):
         '''Method to draw all dots and edges on the screen'''
         for edge in self.G.edges:
             start_dot = self.G.nodes[edge[0]]['position']
@@ -54,35 +83,76 @@ class Dot():
 
             if self.G.nodes[name_string]['highlight']:
                 pygame.draw.circle(surface, (0, 255, 0), self.G.nodes[name_string]['position'], self.R * 1.1)
-            pygame.draw.circle(surface, (150, 150, 150), self.G.nodes[name_string]['position'], self.R)
 
-            font = pygame.font.Font(None, self.R)
-            text = font.render(name_string, 2, (0, 255, 150))
+            dot_color = self.G.nodes[name_string]['color']
+            pygame.draw.circle(surface, dot_color, self.G.nodes[name_string]['position'], self.R)
+
+            font = pygame.font.Font(None, int(self.R*1.05))
+
+            node_text = self.G.nodes[name_string]['text']
+            text = font.render(node_text, 2, (0,0,0))
             textpos = text.get_rect()
             textpos.centery = self.G.nodes[name_string]['position'][1]
             textpos.centerx = self.G.nodes[name_string]['position'][0]
             surface.blit(text, textpos)
 
+
+            font = pygame.font.Font(None, self.R)
+            text = font.render(node_text, 2, (255,255,255))
+            textpos = text.get_rect()
+            textpos.centery = self.G.nodes[name_string]['position'][1]
+            textpos.centerx = self.G.nodes[name_string]['position'][0]
+            surface.blit(text, textpos)
+
+        if GG: # GG - это граф с фактическими положениями точек на плоскости
+            pass
+            # здесь кладём полупрозрачную серость на экран
+            # и далее отрисовывем точки, содержащиеся в GG
+            # в этом методе происходит только отрисовка точек из GG!
+            # корректировка фактических дистанций происходит в инстансе trainer
+
     def highlight(self, dot_name):
         self.G.nodes[dot_name]['highlight'] = True
-        print(dot_name, self.G.nodes[dot_name]['highlight'], ' is highlited')
+        # print(dot_name, self.G.nodes[dot_name]['highlight'], ' is highlited')
 
     def no_highlight(self, dot_name):
         self.G.nodes[dot_name]['highlight'] = False
-        print(dot_name, self.G.nodes[dot_name]['highlight'], ' is not highlited')
+        # print(dot_name, self.G.nodes[dot_name]['highlight'], ' is not highlited')
 
     def link(self,name_1,name_2):
         '''Method to link one dot to another'''
         self.G.add_edge(name_1,name_2)
+        self.store.dump(self.G)
 
     def unlink(self, name_1,name_2):
         '''Unlink two dots it they are linked'''
         try:
             self.G.remove_edge(name_1,name_2)
+            self.store.dump(self.G)
         except:
             pass
+    def save(self):
+        self.store.dump(self.G)
+
+    def get_train_set(self):
+        '''Возвращается [[emb_1, emb_2, d_t], ... ]'''
+        L = []
+        edges = self.G.edges
+        for edge in edges:
+            pos_1 = self.G.nodes[edge[0]]['position']
+            pos_2 = self.G.nodes[edge[1]]['position']
+            # print(pos_1,pos_2)
+            d = (pos_1[0]-pos_2[0])**2 + (pos_1[1]-pos_2[1])**2
+            d = d**0.5
+            L.append([self.G.nodes[edge[0]]['embedding'], self.G.nodes[edge[1]]['embedding'], d])
+        return L
+
+    def get_G(self):
+        return self.G
 
 dot = Dot()
+
+
 
 class Button():
     '''The fasade for the collections of buttons;
@@ -116,10 +186,20 @@ class Button():
                                 'name': 'the_delete_edge_button',
                                 'activated': False
                                 }
+
+        the_play_button = { 'color': (255,255,255),
+                                'rect': pygame.Rect(10,250,50,50),
+                                'text': '>',
+                                'name': 'the_play_button',
+                                'activated': False
+                                }
+
+
         self.buttons = [the_add_node_button,
                         the_delete_node_button,
                         the_add_edge_button,
-                        the_delete_edge_button]
+                        the_delete_edge_button,
+                        the_play_button]
 
 
 
@@ -182,7 +262,6 @@ class Button():
         return None
 button = Button()
 
-
 main_screen_surface = pygame.display.set_mode((1000,1000))
 
 app_state = None
@@ -196,6 +275,7 @@ while 1:
         internal_actions = 0
 
         if event.type == pygame.QUIT:
+            dot.save()
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -222,7 +302,7 @@ while 1:
                 app_state = None
 
 
-            # ДОБАВИТЬ НОВУЮ НОДУ
+            # ДОБАВИТЬ НОДУ
             # если уже активирована кнопка "добавить",
             # после активации кнопки "добавить" юзер никуда не кликал и если сейчас мышка опустилась на поле,
             # то нужно в эту точку добавить новую ноду
@@ -230,9 +310,17 @@ while 1:
                     and app_state == 'AWAITING DOT ADDING' \
                     and internal_actions == 0:
                 print('ДОБАВИТЬ НОВУЮ НОДУ')
-                dot.add('svsvsvsvsvsv',pos)
+
+                interface = text_buffer_interface()
+                new_text, new_color = interface.open()
+                print('Input text: ', new_text)
+                print('Input color: ', new_color)
+
+                dot.add(pos,new_text,new_color)
+
                 internal_actions = 1
                 button.desactivate_by_name('the_add_node_button')
+
                 app_state = None
 
             # Активировать кнопку "удалить ноду"
@@ -240,7 +328,7 @@ while 1:
             if but_name=='the_delete_node_button' \
                     and app_state == None \
                     and internal_actions == 0:
-                print('Активировать кнопку "удалить ноду"')
+                # print('Активировать кнопку "удалить ноду"')
                 button.activate_by_name(but_name)
                 internal_actions += 1
                 app_state = 'AWAITING DOT DELETING'
@@ -250,7 +338,7 @@ while 1:
             if dot_name \
                     and internal_actions == 0 \
                     and app_state == 'AWAITING DOT DELETING':
-                print('Обработать клик удаления удаление ноды')
+                # print('Обработать клик удаления удаление ноды')
                 dot.delete(dot_name)
                 internal_actions += 1
                 button.desactivate_by_name('the_delete_node_button')
@@ -260,7 +348,7 @@ while 1:
             if internal_actions == 0 \
                     and app_state == 'AWAITING DOT DELETING' \
                     and button.button_name_by_xy(pos) =='the_delete_node_button':
-                print('Дезактивая кнопки удаления ноды')
+                # print('Дезактивая кнопки удаления ноды')
                 app_state = None
                 internal_actions += 1
                 button.desactivate_by_name('the_delete_node_button')
@@ -270,7 +358,7 @@ while 1:
                     and app_state == None \
                     and button.button_name_by_xy(pos) == 'the_add_edge_button' \
                     and button.get_activated()!='the_add_edge_button':
-                print('Активирована кнопка ДОБАВИТЬ РЕБРО')
+                # print('Активирована кнопка ДОБАВИТЬ РЕБРО')
                 internal_actions = 1
                 button.activate_by_name('the_add_edge_button')
                 app_state = 'AWAITING EDGE ADDING NODE 1'
@@ -289,7 +377,7 @@ while 1:
                     and (app_state == 'AWAITING EDGE ADDING NODE 1')\
                     and button.get_activated()=='the_add_edge_button' \
                     and dot.dot_name_by_xy(pos):
-                print('Обработать первый клик после активации кнопки "добавить ребро"')
+                # print('Обработать первый клик после активации кнопки "добавить ребро"')
                 internal_actions = 1
                 app_state = 'AWAITING EDGE ADDING NODE 2'
                 linking_node_1 = dot.dot_name_by_xy(pos)
@@ -301,7 +389,7 @@ while 1:
                     and button.get_activated()=='the_add_edge_button' \
                     and dot.dot_name_by_xy(pos)\
                     and linking_node_1 != dot.dot_name_by_xy(pos):
-                print('Обработать второй клик после активации кнопки "добавить ребро"')
+                # print('Обработать второй клик после активации кнопки "добавить ребро"')
                 internal_actions = 1
                 app_state = None
                 dot.link(linking_node_1,dot.dot_name_by_xy(pos))
@@ -313,7 +401,7 @@ while 1:
                     and app_state == None \
                     and button.get_activated()==None \
                     and button.button_name_by_xy(pos) == 'the_delete_edge_button':
-                print('Активировать кнопку "удалить ребро"')
+                # print('Активировать кнопку "удалить ребро"')
                 button.activate_by_name('the_delete_edge_button')
                 internal_actions = 1
                 app_state = 'AWAITING FIRST NODE TO EDGE DELETION'
@@ -323,7 +411,7 @@ while 1:
                     and app_state == 'AWAITING FIRST NODE TO EDGE DELETION' \
                     and button.get_activated()== 'the_delete_edge_button' \
                     and button.button_name_by_xy(pos) == 'the_delete_edge_button':
-                print('Дезактивировать кнопку "удалить ребро"')
+                # print('Дезактивировать кнопку "удалить ребро"')
                 button.desactivate_by_name('the_delete_edge_button')
                 internal_actions = 1
                 app_state = None
@@ -335,7 +423,7 @@ while 1:
                     and button.get_activated() == 'the_delete_edge_button' \
                     and dot.dot_name_by_xy(pos) \
                     and first_dot_to_edge_delete == None:
-                print('Обработать 1 клик после активации кнопки "удалить ребро"')
+                # print('Обработать 1 клик после активации кнопки "удалить ребро"')
                 internal_actions = 1
 
                 dot.highlight(dot.dot_name_by_xy(pos))
@@ -348,7 +436,7 @@ while 1:
                     and button.get_activated() == 'the_delete_edge_button' \
                     and dot.dot_name_by_xy(pos) \
                     and first_dot_to_edge_delete != None:
-                print('Обработать 2 клик после активации кнопки "удалить ребро"')
+                # print('Обработать 2 клик после активации кнопки "удалить ребро"')
                 internal_actions = 1
                 app_state = None
                 dot.no_highlight(first_dot_to_edge_delete)
@@ -356,19 +444,69 @@ while 1:
                 dot.unlink(first_dot_to_edge_delete, dot.dot_name_by_xy(pos))
                 first_dot_to_edge_delete = None
 
+            # Активация состояния перетаскивания
+            if internal_actions == 0 \
+                    and app_state == None \
+                    and button.get_activated() == None \
+                    and dot.dot_name_by_xy(pos) \
+                    and node_dragging == None:
+                # print('ТАЩИМ!')
+                node_dragging = True
+                dot.highlight(dot.dot_name_by_xy(pos))
+                dragged_node = dot.dot_name_by_xy(pos)
+
+
+            # Активировать кнопку Плей
+            # the_play_button
+            if internal_actions == 0 \
+                    and app_state == None \
+                    and button.button_name_by_xy(pos) == 'the_play_button':
+                print('Начинаем обучение, лол!')
+                button.activate_by_name('the_play_button')
+                internal_actions = 1
+                app_state = 'MASK OPTIMIZING WITH PYTORCH'
+                L = dot.get_train_set()
+                trainer = Trainer(L, dot.get_G())  # , --> при запуске обучения создаёт экземпляр тренера
+
+            # Дезктивировать кнопку плей
+            # при дезактивации серые ноды остаются серыми и получаются статус "historical"
+            # historical-ноды отображаются на мониторе как ещё более серые, чем серые
+            # то есть имеется три типа нод: "цветные", "серые", "исторические"
+            # также ноды могут быть "тренировочными" и "тестовыми"
+            #
+            if internal_actions == 0 \
+                    and app_state == 'MASK OPTIMIZING WITH PYTORCH' \
+                    and button.button_name_by_xy(pos) == 'the_play_button':
+                print('Завершаем обучение')
+                button.desactivate_by_name('the_play_button')
+                internal_actions = 1
+                app_state = None
 
         if event.type == pygame.MOUSEMOTION:
-            if dot.dot_name_by_xy(event.pos) \
-                    and event.buttons[0] \
-                    and app_state == None:
-                print('pos', event.pos)
-                print('but', event.buttons)
-                dot.move(dot.dot_name_by_xy(event.pos), event.pos)
+            if node_dragging:
+                # print('pos', event.pos)
+                # print('but', event.buttons)
+                dot.highlight(dragged_node)
+                dot.move(dragged_node, event.pos)
 
         if event.type == pygame.MOUSEBUTTONUP:
-            pass
+            if node_dragging:
+                dot.no_highlight(dragged_node)
+                dragged_node = None
+                node_dragging = None
+
 
 
     button.to_surface(main_screen_surface)
     dot.to_surface(main_screen_surface)
+
+    if app_state == 'MASK OPTIMIZING WITH PYTORCH' \
+            and button.get_activated() == 'the_play_button':
+        # print('ШАГ ОБУЧЕНИЯ')
+        trainer.mask_step() #--> а тут делаем шаг обучения
+        trainer.xy_fact_step() #--> двигаем точки по GG
+        trainer.to_center()
+        trainer.to_surface(main_screen_surface)
+
     pygame.display.flip()
+

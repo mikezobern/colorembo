@@ -5,7 +5,7 @@ import torch
 client = chromadb.PersistentClient(path="C:/Users/axnm/PycharmProjects/colors_emb/chroma_shit")
 
 openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-                api_key="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",
+                api_key="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",
                 model_name="text-embedding-ada-002"
             )
 collection = client.get_or_create_collection(name="colors_of_words", metadata={'hnsw:space':'ip'}, embedding_function=openai_ef)
