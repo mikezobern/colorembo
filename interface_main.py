@@ -506,6 +506,7 @@ while 1:
         trainer.mask_step() #--> а тут делаем шаг обучения
         trainer.xy_fact_step() #--> двигаем точки по GG
         trainer.to_center()
+        # trainer.align()
         trainer.to_surface(main_screen_surface)
 
     pygame.display.flip()

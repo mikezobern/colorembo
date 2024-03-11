@@ -12,7 +12,7 @@ class Trainer():
         import torch; from mrsc import mrsc
         from itertools import count
         from random import randint
-        import networkx
+        import networkx; self.networkx = networkx
         from xy_mapping import xy_mapping
         import pygame
         self.pygame = pygame
@@ -105,6 +105,21 @@ class Trainer():
         for node_name in self.GG.nodes:
             pos = self.GG.nodes[node_name]['position']
             self.GG.nodes[node_name]['position'] = pos[0]+dx,pos[1]+dy
+
+
+    def align(self):
+        """Метод алайнмента облака подвижных точек к связанным тренировочным точкам (без алайнмента к свободным тренировочным).
+        Этапы операции:
+        1. Определить имена связанных тренировочных точек, используя self.G
+        2. Создать словари соответствия имён и индексов name_to_index_alig и index_to_name_alig
+        3. Задать модель оптимизации с параметрами-координатами в модуле alignment
+        4. Изменить self.GG"""
+
+        # names of the linked dots
+        for name in self.GG.nodes:
+            nhb = self.networkx.neighbors(self.GG, name)
+            print('self.networkx.neighbors(self.GG, n)', list(nhb), 'name: ',  name)
+
 
     def to_surface(self, main_surface):
         pygame = self.pygame
