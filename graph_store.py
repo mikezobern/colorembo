@@ -6,11 +6,13 @@ class Store():
         # G = networkx.Graph()
         self.validation = validation
         if not validation:
-            self.directory_path = "C:/Users/axnm/PycharmProjects/colors_emb/colors_emb/networkx_shit/palitres/multilan series"
+            # self.directory_path = "C:/Users/axnm/PycharmProjects/colors_emb/colors_emb/networkx_shit/palitres/multilan series"
+            self.directory_path = "networkx_shit/palitres/multilan series"
             self.filename = "en_ru_fr_ger_ita.pkl"
             self.file_path = f"{self.directory_path}/{self.filename}"
         else:
-            self.directory_path = "C:/Users/axnm/PycharmProjects/colors_emb/colors_emb/networkx_shit/palitres/test_palitres"
+            # self.directory_path = "C:/Users/axnm/PycharmProjects/colors_emb/colors_emb/networkx_shit/palitres/test_palitres"
+            self.directory_path = "networkx_shit/palitres/multilan series"
             self.filename = "the_bigger_test_base.pkl"
             self.file_path = f"{self.directory_path}/{self.filename}"
 

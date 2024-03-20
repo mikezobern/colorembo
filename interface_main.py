@@ -611,7 +611,7 @@ while 1:
             and button.get_activated() == 'the_play_button':
         # print('ШАГ ОБУЧЕНИЯ')
 
-        for i in range(350):
+        for i in range(35):
             trainer.mask_step() #--> а тут делаем шаг обучения маски: меняем пространство эмбеддингов
 
         trainer.xy_fact_step() #--> двигаем точки по GG
