@@ -4,18 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="interface is almost complete excluding information adding to node!">
-      <change afterPath="$PROJECT_DIR$/get_embedding.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graph_store.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mrsc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/text_buffer_interface.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xy_mapping.py" afterDir="false" />
+    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="MVP-2">
+      <change afterPath="$PROJECT_DIR$/aligner_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_store.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/neighbours_to_terminal.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scoring.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emb_func_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/emb_func_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_store.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph_store.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interface_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networkx_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/openai_emb.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mrsc.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrsc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xy_mapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/xy_mapping.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="$allow_reset$" />
@@ -49,6 +49,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Python.aligner_model.executor&quot;: &quot;Run&quot;,
     &quot;Python.emb_func_test.executor&quot;: &quot;Run&quot;,
     &quot;Python.get_embedding.executor&quot;: &quot;Run&quot;,
     &quot;Python.graph_store.executor&quot;: &quot;Run&quot;,
@@ -56,8 +57,10 @@
     &quot;Python.lambda_test.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.mrsc.executor&quot;: &quot;Run&quot;,
+    &quot;Python.neighbours_to_terminal.executor&quot;: &quot;Run&quot;,
     &quot;Python.networkx_test.executor&quot;: &quot;Run&quot;,
     &quot;Python.openai_emb.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scoring.executor&quot;: &quot;Run&quot;,
     &quot;Python.softmax.executor&quot;: &quot;Run&quot;,
     &quot;Python.subprocess_test.executor&quot;: &quot;Run&quot;,
     &quot;Python.symmetric_dict.executor&quot;: &quot;Run&quot;,
@@ -72,7 +75,7 @@
   }
 }</component>
   <component name="RunManager" selected="Python.interface_main">
-    <configuration name="get_embedding" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
+    <configuration name="graph_store" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
       <module name="colors_emb" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -85,7 +88,7 @@
       <option name="IS_MODULE_SDK" value="$allow_reset$" />
       <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
       <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/get_embedding.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/graph_store.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -138,7 +141,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mrsc" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
+    <configuration name="neighbours_to_terminal" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
       <module name="colors_emb" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -151,7 +154,29 @@
       <option name="IS_MODULE_SDK" value="$allow_reset$" />
       <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
       <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mrsc.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/neighbours_to_terminal.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="scoring" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
+      <module name="colors_emb" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="$allow_reset$" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="$allow_reset$" />
+      <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
+      <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scoring.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -182,35 +207,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="xy_mapping" type="PythonConfigurationType" factoryName="Python" temporary="$allow_reset$" nameIsGenerated="$allow_reset$">
-      <module name="colors_emb" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="$allow_reset$" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="$allow_reset$" />
-      <option name="ADD_CONTENT_ROOTS" value="$allow_reset$" />
-      <option name="ADD_SOURCE_ROOTS" value="$allow_reset$" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/xy_mapping.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.interface_main" />
-        <item itemvalue="Python.xy_mapping" />
+        <item itemvalue="Python.scoring" />
         <item itemvalue="Python.trainer" />
-        <item itemvalue="Python.mrsc" />
-        <item itemvalue="Python.get_embedding" />
+        <item itemvalue="Python.graph_store" />
+        <item itemvalue="Python.neighbours_to_terminal" />
       </list>
     </recent_temporary>
   </component>
@@ -286,7 +289,23 @@
       <option name="project" value="LOCAL" />
       <updated>1708496316325</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="MVP">
+      <option name="closed" value="$allow_reset$" />
+      <created>1709880620634</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1709880620634</updated>
+    </task>
+    <task id="LOCAL-00009" summary="MVP-2">
+      <option name="closed" value="$allow_reset$" />
+      <created>1710139694554</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1710139694554</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -307,6 +326,8 @@
     <MESSAGE value="internal actions variable added, so my interface changes its internal state only one time per one cycle of reviewing events!" />
     <MESSAGE value="almost everything is working except node-dragging and to-node-information-adding" />
     <MESSAGE value="interface is almost complete excluding information adding to node!" />
-    <option name="LAST_COMMIT_MESSAGE" value="interface is almost complete excluding information adding to node!" />
+    <MESSAGE value="MVP" />
+    <MESSAGE value="MVP-2" />
+    <option name="LAST_COMMIT_MESSAGE" value="MVP-2" />
   </component>
 </project>

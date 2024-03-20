@@ -8,13 +8,14 @@ class mrsc(torch.nn.Module):
         mask = torch.ones(embedding_size,)
         self.mask = torch.nn.parameter.Parameter(data = mask, requires_grad = True)
 
-        scale = 100*torch.ones(1,)
+        scale = 1*torch.ones(1,)
         self.scale = torch.nn.parameter.Parameter(data=scale, requires_grad=True)
 
         self.masked_cosine = lambda x,y: self.scale*(torch.sum( (x*y*self.mask) ))
 
     def forward(self, x_1, x_2):
-        return self.masked_cosine(x_1, x_2)
+        # print('self.scale',self.scale)
+        return self.masked_cosine(x_1, x_2).reshape(1,)
 
 
 
