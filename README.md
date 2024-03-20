@@ -34,7 +34,8 @@ o- - delete node
 
 /- - delete edge
 
-> start training
+'>' start training
+
 // - connect node with all others
 
 -- - disconnect node from all others
