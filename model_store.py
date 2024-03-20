@@ -2,7 +2,7 @@ import pickle
 
 class Model_store():
     def __init__(self):
-        self.directory_path = "C:/Users/axnm/PycharmProjects/colors_emb/networkx_shit/palitres/multilan series"
+        self.directory_path = "C:/Users/axnm/PycharmProjects/colors_emb/colors_emb/networkx_shit/palitres/multilan series"
         self.filename = "model_en_ru_fr_ger_ita.pkl"
         self.file_path = f"{self.directory_path}/{self.filename}"
 
