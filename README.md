@@ -1,44 +1,42 @@
-**Colorembo — программа для извлечения из текста цвета**
+**Colorembo is a program for extracting colors from text**
 
-Если создать эмбеддинг слова "банан", а также эмбеддинги названий различных цветов, то в общем случае к слову "банан" будут близки случайные цвета, а не "жёлтый" или "зелёный".
-Эта программа изменяет пространсто эмбеддингов так, чтобы самыми близкими к слову "банан" оказались его собственные цвета, то есть "жёлтый" или "зелёный".
+If you create an embedding of the word "banana", as well as embeddings of the names of various colors, then in general, random colors will be close to the word "banana", and not "yellow" or "green". This program modifies the embedding space so that the closest to the word "banana" are its own colors, that is, "yellow" or "green".
 
-**Идея**
+**Idea**
 
-В обычном векторном поиске используется L2-расстояние между двумя векторами, которое для нормированных векторов вычисляет просто как дотпродукт.
-Colorembo же делает дотпродукт не двух векторов, а трёх: банана, цвета и **маски**. Интерфейс программы построен вокруг поиска этой самой маски.
+In regular vector search, the L2 distance between two vectors is used, which for normalized vectors is calculated simply as the dot product. Colorembo, on the other hand, does the dot product not of two vectors, but of three: banana, color, and mask. The program's interface is built around searching for this very mask.
 
-В качестве тренировочных данных используется расположенная на плоскости цветовая палитра, где в качестве цветов — названия этих цветов на 4 языках. Эту палитру ты видишь при запуске.
+As training data, a color palette located on a plane is used, where the colors are the names of these colors in 4 languages. This palette is visible when you start the program.
 
-В качестве проверочных данных используется отдельная палитра, на которой расположены названия вещей, у которыйх есть стандартный цвет: роза, джинсы, лягушка -- и так далее. Увидеть её можно, если передать аргумент True в инициализацию класса Store() в фукнции __init__ класса Dot, расположенного в interface_main.py
+As test data, a separate palette is used, on which the names of things that have a standard color are placed: a rose, jeans, a frog, etc. It can be seen if the argument True is passed to the initialization of the Store() class in the Dot function init class, located in interface_main.py
 
-Во время обучения маски в терминал выводится score -- процент вещей из проверочной палитры, цвет которых был верно определён при вычислении через обучаемую маску.
+During mask training, the score is output to the terminal - the percentage of items from the test palette whose color was correctly determined when calculating through the trained mask.
 
-Графический интерфейс нужен, чтобы на глаз определять, насколько хорошо тренировочные слова подтянулись к целевой палитре.
+The graphical interface is needed in order to visually determine how well the training words have approached the target palette.
 
-**Почему это круто**
+**Why is this cool**
 
-Маску можно интерпретировать как эмбеддинг -- это такой же вектор той же размерности. А это значит, что его можно инвертировать и получить текст на естественном языке.
+The mask can be interpreted as an embedding - it is the same vector of the same dimension. And this means that it can be inverted and get text in a natural language.
 
-Этот текст в сущности представляет собой заклинание, которое модифицирует пространство эмбеддингов! Такая техника заклинания векторных пространств может быть полезна при работе с векторными базами данных. Заклинание позволяет уточнить, в каком смысле должны быть похожи вектора. В случае colorembo это похожесть вещей в плане их цвета.
+This text is essentially a spell that modifies the embedding space! Such a vector space spellcasting technique can be useful when working with vector databases. The spell allows you to clarify in what sense the vectors should be similar. In the case of Colorembo, this is the similarity of things in terms of their color.
 
-**Как запустить**
-Програма запускается из скрипта interface_main. Обучение запускается в помощью кнопки **>**.
+**How to run the program**
 
-**Кнопки**
+The program is launched from the interface_main script. Training is started using the > button.
 
-**o+** — добавить новую ноду. Для корректной работы нужно добавить ключ openai в модуль get_embedding.py
+**Buttons**
 
-**o-** — удалить ноду
+o+ - add a new node. For correct operation, you need to add the openai key to the get_embedding.py module
 
-**/+** — добавить ребро
+o- - delete node
 
-**/-** — удалить ребро
+/+ - add edge
 
-**>** — запустить обучение
+/- - delete edge
 
-**//** — связать ноду со всем остальными
+> start training
+// - connect node with all others
 
-**--** — отвязать ноду от всех остальных
+-- - disconnect node from all others
 
-**dtt** — связать все ноды со всеми
+dtt - connect all nodes with all others
