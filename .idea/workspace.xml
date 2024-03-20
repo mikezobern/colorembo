@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="MVP-2">
-      <change afterPath="$PROJECT_DIR$/aligner_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_store.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neighbours_to_terminal.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scoring.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graph_store.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph_store.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interface_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrsc.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrsc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xy_mapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/xy_mapping.py" afterDir="false" />
-    </list>
+    <list default="$allow_reset$" id="f506b196-4ddb-4ad4-a1a7-f527dff58ef0" name="Changes" comment="prototype with different train bases" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="$allow_reset$" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -305,7 +293,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710139694554</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="prototype with different train bases">
+      <option name="closed" value="$allow_reset$" />
+      <created>1710904839038</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1710904839038</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -313,7 +309,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -328,6 +336,7 @@
     <MESSAGE value="interface is almost complete excluding information adding to node!" />
     <MESSAGE value="MVP" />
     <MESSAGE value="MVP-2" />
-    <option name="LAST_COMMIT_MESSAGE" value="MVP-2" />
+    <MESSAGE value="prototype with different train bases" />
+    <option name="LAST_COMMIT_MESSAGE" value="prototype with different train bases" />
   </component>
 </project>
