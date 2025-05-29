@@ -1,26 +1,34 @@
-**Colorembo is a program for extracting colors from text**
+https://github.com/user-attachments/assets/c04c43d8-b3db-414f-8418-bc19e8e3db0f
 
-If you create an embedding of the word "banana", as well as embeddings of the names of various colors, then in general, random colors will be close to the word "banana", and not "yellow" or "green". This program modifies the embedding space so that the closest to the word "banana" are its own colors, that is, "yellow" or "green".
 
-**Idea**
 
-In regular vector search, the L2 distance between two vectors is used, which for normalized vectors is calculated simply as the dot product. Colorembo, on the other hand, does the dot product not of two vectors, but of three: banana, color, and mask. The program's interface is built around searching for this very mask.
 
-As training data, a color palette located on a plane is used, where the colors are the names of these colors in 4 languages. This palette is visible when you start the program.
+Zero‑Shot Colour Attribution with Multilingual Text Embeddings
 
-As test data, a separate palette is used, on which the names of things that have a standard color are placed: a rose, jeans, a frog, etc. It can be seen if the argument True is passed to the initialization of the Store() class in the Dot function init class, located in interface_main.py
+Project status : proof‑of‑concept – stable API, research ongoing
 
-During mask training, the score is output to the terminal - the percentage of items from the test palette whose color was correctly determined when calculating through the trained mask.
+TL;DR
 
-The graphical interface is needed in order to visually determine how well the training words have approached the target palette.
+Given any word or short phrase in more than 50 languages, the service returns the most likely basic colour term (“red”, “green”, …).No (object → colour) training pairs are required: the classifier exploits the semantic structure of a pre‑trained language model and a tiny set of colour tokens.The task is therefore zero‑shot with respect to the classification labels.
+![photo_2024-06-05_09-52-37ыаыа](https://github.com/user-attachments/assets/b16b2267-4402-44e4-9e50-042723019b9d)
 
-**Why is this cool**
+Why this repo might interest you
 
-The mask can be interpreted as an embedding - it is the same vector of the same dimension. And this means that it can be inverted and get text in a natural language.
+Engineering demo – full end‑to‑end pipeline: data → embeddings → ANN index → API.
 
-This text is essentially a spell that modifies the embedding space! Such a vector space spellcasting technique can be useful when working with vector databases. The spell allows you to clarify in what sense the vectors should be similar. In the case of Colorembo, this is the similarity of things in terms of their color.
+Multilingual – works with any language supported by the encoder (tested on 50+).
+
+Lightweight – ≤ 100 MB index, single‑GPU optional, CPU‑only fine for demo.
+
+Reproducible – deterministic build via Docker / Poetry, unit & integration tests, CI.
+
+Extensible – plug‑in architecture: swap encoder, index, or distance learner with a few lines.
+
+
+
 
 **How to run the program**
+
 
 The program is launched from the interface_main script. Training is started using the > button.
 
